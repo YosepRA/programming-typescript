@@ -1,0 +1,17 @@
+{
+  "name": "programming-typescript",
+  "version": "1.0.0",
+  "description": "Book repository for Programming TypeScript by Boris Cherny.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yosep Ryan Agusta <yosep.ryan.yra@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.2.0",
+    "tslint": "^6.1.3",
+    "typescript": "^5.0.4"
+  }
+}
