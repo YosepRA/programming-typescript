@@ -335,42 +335,57 @@
 
 // Enums
 
-// Naming convention is singular and capitalized first letter.
-enum Language {
-  English,
-  Spanish,
-  Russian,
-}
+// // Naming convention is singular and capitalized first letter.
+// enum Language {
+//   English,
+//   Spanish,
+//   Russian,
+// }
 
-// TypeScript will automatically infer a number as a value of each enums.
-// But you can also explicitly define it yourself.
-enum LanguageTwo {
-  English = 1,
-  Spanish = 2,
-  Russian = 3,
-}
+// // TypeScript will automatically infer a number as a value of each enums.
+// // But you can also explicitly define it yourself.
+// enum LanguageTwo {
+//   English = 1,
+//   Spanish = 2,
+//   Russian = 3,
+// }
 
-let myFirstLanguage = Language.Spanish; // 1
-let mySecondLanguage = LanguageTwo.Russian; // 3
+// let myFirstLan;guage = Language.Spanish; // 1
+// let mySecondLanguage = LanguageTwo.Russian; // 3
 
-// You can use calculation as a value.
-enum LanguageThree {
-  English = 200,
-  Spanish = 200 + 300,
-  Russian, // TypeScript infers 501 since the previous number is 500.
-}
+// // You can use calculation as a value.
+// enum LanguageThree {
+//   English = 200,
+//   Spanish = 200 + 300,
+//   Russian, // TypeScript infers 501 since the previous number is 500.
+// }
 
-// Using mixed string and number values.
-enum Color {
-  Red = '#c10000',
-  Blue = '#007ac1',
-  Pink = 0xc10050,
-  White = 255,
-}
+// // Using mixed string and number values.
+// enum Color {
+//   Red = '#c10000',
+//   Blue = '#007ac1',
+//   Pink = 0xc10050,
+//   White = 255,
+// }
 
-let red = Color.Red;
-let pink = Color.Pink;
-let blue = Color['Blue'];
-console.log('🚀 ~ file: index.ts:374 ~ blue:', blue);
-let black = Color[5];
-console.log('🚀 ~ file: index.ts:376 ~ black:', black);
+// let red = Color.Red;
+// let pink = Color.Pink;
+// let blue = Color['Blue'];
+// let black = Color[5];
+
+/* ===================================================================== */
+
+// Exercise
+
+// 1. For each of these values, what type will TypeScript infer?
+
+let a = 1204; // number
+let b = 'apples and oranges'; // string
+const c = 'pineapple'; // string
+let d = [true, true, false]; // boolean[]
+let e = {
+  type: 'ficus',
+}; // { type: string }
+let f = [1, false]; // (number | boolean)[]
+const g = [3]; // number[]
+let h = null; // any
