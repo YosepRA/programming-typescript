@@ -214,28 +214,208 @@
 
 /* Polymorphism */
 
-function filter(array: any, fn: any) {
-  const result = [];
+// function filter(array: any, fn: any) {
+//   const result = [];
 
-  for (let i = 0; i < array.length; i += 1) {
-    const item = array[i];
+//   for (let i = 0; i < array.length; i += 1) {
+//     const item = array[i];
 
-    if (fn(item)) {
-      result.push(item);
-    }
-  }
+//     if (fn(item)) {
+//       result.push(item);
+//     }
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
-console.log(filter([1, 2, 3, 4, 5], (item: number) => item < 3));
+// // console.log(filter([1, 2, 3, 4, 5], (item: number) => item < 3));
 
-// Creating a function type that supports multiple types can get messy
-// real quick as you have to hand-write all of the types you wish to
-// support in your function.
-type Filter = {
-  (array: number[], fn: (item: number) => boolean): number[];
-  (array: string[], fn: (item: string) => boolean): string[];
-  // Moreover, 'object' type does not define the shape of the object.
-  (array: object[], fn: (item: object) => boolean): object[];
+// // Creating a function type that supports multiple types can get messy
+// // real quick as you have to hand-write all of the types you wish to
+// // support in your function.
+// type Filter = {
+//   (array: number[], fn: (item: number) => boolean): number[];
+//   (array: string[], fn: (item: string) => boolean): string[];
+//   // Moreover, 'object' type does not define the shape of the object.
+//   (array: object[], fn: (item: object) => boolean): object[];
+// };
+
+// // Since we won't know what the type will be ahead of time, we are using
+// // generic type parameter to act as a placeholder.
+// // Depending on how the function is called, it will infer the type based on
+// // the arguments, then assign the type to all of the generics (T) in the
+// // type signature.
+// type FilterGeneric = {
+//   <T>(array: T[], fn: (item: T) => boolean): T[];
+// };
+
+// const filterGeneric: FilterGeneric = (array, fn) => {
+//   const result = [];
+
+//   for (let i = 0; i < array.length; i += 1) {
+//     const item = array[i];
+
+//     if (fn(item)) {
+//       result.push(item);
+//     }
+//   }
+
+//   return result;
+// };
+
+// // "T" is bound to 'number'.
+// console.log(filterGeneric([1, 2, 3], (n) => n < 3));
+// // "T" is bound to 'string'.
+// console.log(filterGeneric(['a', 'b'], (letter) => letter !== 'b'));
+// // "T" is bound to '{ name: string }'.
+// console.log(
+//   filterGeneric(
+//     [
+//       {
+//         name: 'Joe',
+//       },
+//       {
+//         name: 'Mary',
+//       },
+//       {
+//         name: 'Jonathan',
+//       },
+//     ],
+//     (person) => person.name.startsWith('J'),
+//   ),
+// );
+
+// // Where You Can Declare Generics
+
+// type FilterOne = {
+//   <T>(array: T[], fn: (item: T) => boolean): T[];
+// };
+
+// type FilterTwo<T> = {
+//   (array: T[], fn: (item: T) => boolean): T[];
+// };
+
+// type FilterThree = <T>(array: T[], fn: (item: T) => boolean) => T[];
+
+// type FilterFour<T> = (array: T[], fn: (item: T) => boolean) => T[];
+
+// function filterFive<T>(array: T[], fn: (item: T) => boolean): T[] {
+//   return [];
+// }
+
+// // Map function example
+
+// function map(array: unknown[], fn: (item: unknown) => unknown): unknown[] {
+//   const result = [];
+
+//   for (let i = 0; i < array.length; i += 1) {
+//     const item = array[i];
+
+//     result[i] = fn(item);
+//   }
+
+//   return result;
+// }
+
+// // You can assign as many generics as you need. Treat it like a variable
+// // which TS will use as placeholder for your call signature.
+// type MapOne = <T, U>(array: T[], fn: (item: T) => U) => U[];
+
+// const mapOne: MapOne = (array, fn) => {
+//   const result = [];
+
+//   for (let i = 0; i < array.length; i += 1) {
+//     const item = array[i];
+
+//     result[i] = fn(item);
+//   }
+
+//   return result;
+// };
+
+// console.log(mapOne([1, 2, 3], (item) => `Item no. ${item}`));
+
+/* ===================================================================== */
+
+/* Generic Type Inference */
+
+// function map<T, U>(array: T[], fn: (item: T) => U): U[] {
+//   return [];
+// }
+
+// // TS can automatically infer the generics.
+// map(['one', 'two', 'three'], (item) => item.startsWith('t'));
+
+// // Or, you can explicitly annotate your generics.
+// map<string, boolean>(['one', 'two', 'three'], (item) => item.startsWith('t'));
+
+// // But it's all or nothing. You have to annotate all of the generics, or
+// // you don't. If you only annotate one generic when it needs two, it will
+// // throw an error.
+// // map<string>(['one', 'two', 'three'], (item) => item.startsWith('t')); // Expected 2 type arguments, but got 1.
+
+// // Since TS infer generics from the arguments that you pass to function,
+// // sometimes the function don't know exactly the type of your generics.
+// let promise = new Promise<number>((resolve) => resolve(45));
+// // For example the promise 'then' method where 'result' is inferred to {}
+// // by default. Therefore, you have to explicitly annotate the promise
+// // generic type when creating a promise. Only then your promise 'then'
+// // method will expect the same type as you annotate above.
+// // Just imagine a 'T' generic assigned to the global signature.
+// promise.then((result) => result * 4);
+
+/* ===================================================================== */
+
+/* Generic Type Aliases */
+
+type MyEvent<T> = {
+  target: T;
+  type: string;
 };
+
+// let myEvent: MyEvent<HTMLButtonElement | null> = {
+//   target: document.querySelector('#myButton')],
+//   type: 'click',
+// };
+
+type TimedEvent<T> = {
+  event: MyEvent<T>;
+  from: Date;
+  to: Date;
+};
+
+/* ===================================================================== */
+
+/* Bounded Polymorphism */
+
+// type TreeNode = {
+//   value: string;
+// };
+
+// type LeafNode = TreeNode & {
+//   isLeaf: true;
+// };
+
+// type InnerNode = TreeNode & {
+//   children: [TreeNode] | [TreeNode, TreeNode];
+// };
+
+// const a: TreeNode = { value: 'a' };
+// const b: LeafNode = { value: 'b', isLeaf: true };
+// const c: InnerNode = { value: 'c', children: [b] };
+
+// function mapNode<T extends TreeNode>(
+//   node: T,
+//   fn: (value: string) => string,
+// ): T {
+//   return {
+//     ...node,
+//     value: fn(node.value),
+//   };
+// }
+
+// const a1 = mapNode(a, (_) => _.toUpperCase());
+// const b1 = mapNode(b, (_) => _.toUpperCase());
+// const c1 = mapNode(c, (_) => _.toUpperCase());
+
+// console.log(a1, b1, c1);
