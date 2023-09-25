@@ -368,21 +368,21 @@
 
 /* Generic Type Aliases */
 
-type MyEvent<T> = {
-  target: T;
-  type: string;
-};
-
-// let myEvent: MyEvent<HTMLButtonElement | null> = {
-//   target: document.querySelector('#myButton')],
-//   type: 'click',
+// type MyEvent<T> = {
+//   target: T;
+//   type: string;
 // };
 
-type TimedEvent<T> = {
-  event: MyEvent<T>;
-  from: Date;
-  to: Date;
-};
+// // let myEvent: MyEvent<HTMLButtonElement | null> = {
+// //   target: document.querySelector('#myButton')],
+// //   type: 'click',
+// // };
+
+// type TimedEvent<T> = {
+//   event: MyEvent<T>;
+//   from: Date;
+//   to: Date;
+// };
 
 /* ===================================================================== */
 
@@ -419,3 +419,70 @@ type TimedEvent<T> = {
 // const c1 = mapNode(c, (_) => _.toUpperCase());
 
 // console.log(a1, b1, c1);
+
+/* ===================================================================== */
+
+/* Bounded polymorphism with multiple constraints */
+
+// type HasSides = { numberOfSides: number };
+// type SidesHaveLength = { sideLength: number };
+
+// function logPerimeter<Shape extends HasSides & SidesHaveLength>(
+//   s: Shape,
+// ): Shape {
+//   console.log(s.numberOfSides * s.sideLength);
+//   return s;
+// }
+
+// type Square = HasSides & SidesHaveLength;
+// const square: Square = { numberOfSides: 4, sideLength: 3 };
+
+// logPerimeter(square); // Type 'Square', logs '12'.
+
+/* ===================================================================== */
+
+/* Using bounded polymorphism to model arity */
+
+// function call<T extends unknown[], R>(fn: (...args: T) => R, ...args: T): R {
+//   return fn(...args);
+// }
+
+// function fill(length: number, value: string): string[] {
+//   return Array.from({ length }, () => value);
+// }
+
+// console.log(call(fill, 5, 'a'));
+
+/* ===================================================================== */
+
+/* Generic Type Defaults */
+
+// type MyEventWithDefault<T = HTMLElement> = {
+//   target: T;
+//   type: string;
+// };
+
+// type MyEventWithBound<T extends HTMLElement> = {
+//   target: T;
+//   type: string;
+// };
+
+// // Generic type with defaults must appear after generics without default.
+
+// // Good
+// type MyEventGood<
+//   Type extends string,
+//   Target extends HTMLElement = HTMLElement
+// > {
+//   target: Target;
+//   type: Type;
+// }
+
+// // Bad
+// type MyEventBad<
+//   Target extends HTMLElement = HTMLElement,
+//   Type extends string
+// > {
+//   target: Target;
+//   type: Type;
+// }
