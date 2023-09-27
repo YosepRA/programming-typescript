@@ -486,3 +486,117 @@
 //   target: Target;
 //   type: Type;
 // }
+
+/* ===================================================================== */
+
+/* Exercise */
+
+/* 
+  1. Which parts of a function's type signature does TypeScript infer:
+  the parameters, the return type, or both?]
+
+  Answer: TypeScript infer both the parameters and return type. 
+*/
+
+/* 
+  2. Is JavaScript's 'arguments' object typesafe? If not, what can you
+  use instead?
+
+  Answer: I have no idea. It shouldn't have been typesafe because it can
+  be anything. The alternative could be to explicitly declare the arguments
+  type ahead of time, like usual.
+*/
+
+/* 
+  3. Update the overloaded 'reserve' function to have the ability to start
+  vacation immediately. Add a third signature that takes just a destination,
+  without an explicit start date. Update 'reserve' implementation to support
+  this new overloaded signature.
+*/
+
+// type Reservation = {
+//   from: Date | string;
+//   to: Date | string | undefined;
+//   destination: string | undefined;
+// };
+
+// type Reserve = {
+//   (from: Date, to: Date, destination: string): Reservation;
+//   (from: Date, destination: string): Reservation;
+//   // Start reservation immediately.
+//   (destination: string): Reservation;
+// };
+
+// let reserve: Reserve = (
+//   fromOrDestination: Date | string,
+//   toOrDestination?: Date | string,
+//   destination?: string,
+// ) => ({
+//   from: fromOrDestination,
+//   to: toOrDestination,
+//   destination,
+// });
+
+/* 
+  4. Update 'call' implementation to only work for functions whose second
+  argument is a string. For all other function, your implementations should
+  fail.
+*/
+
+// type Call = {
+//   <T extends unknown[], R>(
+//     fn: (value: string, ...args: T) => R,
+//     value: string,
+//     ...args: T
+//   ): R;
+// };
+
+// const call: Call = (fn, ...args) => {
+//   return fn(...args);
+// };
+
+// function fill(length: number, value: string): string[] {
+//   return Array.from({ length }, () => value);
+// }
+
+// function fillStringFirst(value: string, length: number): string[] {
+//   return Array.from({ length }, () => value);
+// }
+
+// console.log(call(fill, 10, 'a'));
+// console.log(call(fillStringFirst, 'a', 10));
+
+/* 
+  5. Implement a small typesafe assertion library "is".
+
+  // Compare a string and a string
+  is('string', 'otherstring') // false
+
+  // Compare a boolean and a boolean
+  is(true, false) // false
+
+  // Compare a number and a number
+  is(42, 42) // true
+
+  // Compare two different types should give a compile error
+  is(10, 'foo')
+
+  // I should be able to pass any numebr of arguments
+  is([1], [1, 2], [1, 2, 3]) // false
+*/
+
+type Is = {
+  <T>(...args: T[]): boolean;
+};
+
+const is: Is = (...args) => {
+  if (args.every((item) => typeof item === 'number')) return true;
+
+  return false;
+};
+
+console.log(is('string', 'otherstring')); // false
+console.log(is(true, false)); // false
+console.log(is(42, 42, 100)); // true
+// console.log(is(10, 'foo')); // Error TS2345
+console.log(is([1], [1, 2], [1, 2, 3]));
