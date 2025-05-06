@@ -2,20 +2,23 @@
 //   return n * n;
 // }
 
-// squareOf(2);
-// squareOf('z');
+// console.log(squareOf(2));
+// console.log(squareOf('z'));
 
 /* ======================= Basic Types ======================= */
 
-// 'any'
-// Type 'any' behaves like JavaScript. Use it only as the very last resort.
+// // 'any'
+// // Type 'any' behaves like JavaScript. Use it only as the very last resort.
 // let a: any = 1;
 // let b: any = ['two'];
 // let c = a + b;
 
+// console.log('🚀 ~ c:', c);
+
 /* ===================================================================== */
 
-// 'unknown'
+// // 'unknown'
+
 // let a: unknown = 10; // unknown
 // let b = a === 10; // boolean
 // let c = a + 10; // Invalid 'a' because type 'unknown'.
@@ -26,7 +29,8 @@
 
 /* ===================================================================== */
 
-// 'boolean'
+// // 'boolean'
+
 // let a = true; // boolean
 // let b = false; // boolean
 // const c = true; // true. Because you can't reassign 'const' values.
@@ -36,8 +40,9 @@
 
 /* ===================================================================== */
 
-// 'number'
-// Everything about number. Integer, float, positive, negative, Infinity, etc.
+// // 'number'
+// // Everything about number. Integer, float, positive, negative, Infinity, etc.
+
 // let a = 10; // number
 // let b = Infinity * 0.1; // number
 // const c = 10; // 10
@@ -50,8 +55,9 @@
 
 /* ===================================================================== */
 
-// 'bigint'
-// It's number, but big. Anything beyond 2^53.
+// // 'bigint'
+// // It's number, but big. Anything beyond 2^53.
+
 // let a = 10n; // bigint
 // const b = 10n; // 10n
 // let c = a + b; // bigint
@@ -63,7 +69,8 @@
 
 /* ===================================================================== */
 
-// 'string'
+// // 'string'
+
 // let a = 'joe'; // string
 // let b = 'marcell'; // string
 // const c = 'joe'; // joe
@@ -74,7 +81,8 @@
 
 /* ===================================================================== */
 
-// 'symbol'
+// // 'symbol'
+
 // let a = Symbol('a'); // symbol
 // let b: symbol = Symbol('b'); // symbol
 // let c = a === b; // boolean
@@ -87,9 +95,10 @@
 
 /* ===================================================================== */
 
-// 'object'
-// This 'thing' has this shape. All it knows that after declaring it, you
-// might update its fields after you create it.
+// // 'object'
+// // This 'thing' has this shape. All it knows that after declaring it, you
+// // might update its fields after you create it.
+
 // let c: {
 //   firstName: string;
 //   lastName: string;
@@ -122,7 +131,8 @@
 
 /* ===================================================================== */
 
-// 'readonly'
+// // 'readonly'
+
 // let user: {
 //   readonly firstName: string;
 // } = {
@@ -134,7 +144,8 @@
 
 /* ===================================================================== */
 
-// 'Type Aliases'
+// // 'Type Aliases'
+
 // type Age = number;
 
 // type Person = {
@@ -151,7 +162,7 @@
 
 /* ===================================================================== */
 
-// Type aliases are block-scoped.
+// // Type aliases are block-scoped.
 
 // type Color = 'red';
 
@@ -166,9 +177,9 @@
 
 /* ===================================================================== */
 
-// Union and Intersection
-// Union is the combination of two sets.
-// Intersection is the common points between two sets.
+// // Union and Intersection
+// // Union is the combination of two sets.
+// // Intersection is the common points between two sets.
 
 // type Cat = {
 //   name: string;
@@ -214,7 +225,7 @@
 
 /* ===================================================================== */
 
-// Arrays
+// // Arrays
 
 // let a = [1, 2, 3]; // number[]
 // let b = ['one', 'two']; // string[]
@@ -333,7 +344,7 @@
 
 /* ===================================================================== */
 
-// Enums
+// // Enums
 
 // // Naming convention is singular and capitalized first letter.
 // enum Language {
@@ -350,7 +361,7 @@
 //   Russian = 3,
 // }
 
-// let myFirstLan;guage = Language.Spanish; // 1
+// let myFirstLanguage = Language.Spanish; // 1
 // let mySecondLanguage = LanguageTwo.Russian; // 3
 
 // // You can use calculation as a value.
@@ -371,21 +382,21 @@
 // let red = Color.Red;
 // let pink = Color.Pink;
 // let blue = Color['Blue'];
-// let black = Color[5];
+// let black = Color[0];
 
 /* ===================================================================== */
 
-// Exercise
+// // Exercise
 
-// 1. For each of these values, what type will TypeScript infer?
+// // 1. For each of these values, what type will TypeScript infer?
 
-let a = 1204; // number
-let b = 'apples and oranges'; // string
-const c = 'pineapple'; // string
-let d = [true, true, false]; // boolean[]
-let e = {
-  type: 'ficus',
-}; // { type: string }
-let f = [1, false]; // (number | boolean)[]
-const g = [3]; // number[]
-let h = null; // any
+// let a = 1204; // number
+// let b = 'apples and oranges'; // string
+// const c = 'pineapple'; // string
+// let d = [true, true, false]; // boolean[]
+// let e = {
+//   type: 'ficus',
+// }; // { type: string }
+// let f = [1, false]; // (number | boolean)[]
+// const g = [3]; // number[]
+// let h = null; // any

@@ -2,12 +2,12 @@
 
 /* ===================================================================== */
 
-// TypeScript won't infer the parameter types, except for Contextual Typing.
+// // TypeScript won't infer the parameter types, except for Contextual Typing.
 // function add(a: number, b: number) {
 //   return a + b;
 // }
 
-/* TypeScript supports at least 5 ways of declaring functions. */
+// /* TypeScript supports at least 5 ways of declaring functions. */
 
 // // Named function
 // function greet(name: string) {
@@ -55,7 +55,6 @@
 // log2('User signed in log 2', 'asd123');
 
 // // You can provide type even to default parameters.
-
 // type Context = {
 //   appId?: string;
 //   userId?: string;
@@ -78,6 +77,15 @@
 // }
 
 // console.log(sum([1, 2, 3])); // 6
+
+// // To receive an arbitrary amount of arguments in your function, use 'arguments'.
+// // However, this is not safe because TypeScript will infer these arguments with
+// // 'any' type.
+// function sumVariadic(): number {
+//   return Array.from(arguments).reduce((total, n) => total + n, 0);
+// }
+
+// console.log(sumVariadic(1, 2, 3)); // Expected 0 arguments, but got 3.
 
 // // A function can only have one rest parameter, and it has to be the last one.
 // function sumVariadicSafe(...numbers: number[]): number {
@@ -190,7 +198,7 @@
 // type Reservation = {
 //   from: Date;
 //   to: Date | string;
-//   destination: string | undefined;
+//   destination?: string | undefined;
 // };
 
 // type Reserve = {
@@ -204,11 +212,32 @@
 //   from: Date,
 //   toOrDestination: Date | string,
 //   destination?: string,
-// ) => ({
-//   from,
-//   to: toOrDestination,
-//   destination,
-// });
+// ) => {
+//   if (toOrDestination instanceof Date && destination !== undefined) {
+//     console.log('Booking a two ways flight...');
+//     return {
+//       from,
+//       to: toOrDestination,
+//       destination,
+//     };
+//   } else if (typeof toOrDestination === 'string') {
+//     console.log('Booking a one way flight...');
+
+//     return {
+//       from,
+//       to: toOrDestination,
+//     };
+//   } else {
+//     return {
+//       from,
+//       to: toOrDestination,
+//       destination,
+//     };
+//   }
+// };
+
+// console.log(reserve(new Date(), new Date(), 'Jakarta'));
+// console.log(reserve(new Date(), 'Jakarta'));
 
 /* ===================================================================== */
 
@@ -228,7 +257,7 @@
 //   return result;
 // }
 
-// // console.log(filter([1, 2, 3, 4, 5], (item: number) => item < 3));
+// console.log(filter([1, 2, 3, 4, 5], (item: number) => item < 3));
 
 // // Creating a function type that supports multiple types can get messy
 // // real quick as you have to hand-write all of the types you wish to
@@ -285,19 +314,27 @@
 //   ),
 // );
 
-// // Where You Can Declare Generics
+// // Where You Can Declare and use Generics
 
 // type FilterOne = {
 //   <T>(array: T[], fn: (item: T) => boolean): T[];
 // };
 
+// const filterOneEx: FilterOne = () => {};
+
 // type FilterTwo<T> = {
 //   (array: T[], fn: (item: T) => boolean): T[];
 // };
 
+// const filterTwoEx: FilterTwo<number> = () => {};
+
 // type FilterThree = <T>(array: T[], fn: (item: T) => boolean) => T[];
 
+// const filterThreeEx: FilterThree = () => {};
+
 // type FilterFour<T> = (array: T[], fn: (item: T) => boolean) => T[];
+
+// const filterFourEx: FilterFour<string> = () => {};
 
 // function filterFive<T>(array: T[], fn: (item: T) => boolean): T[] {
 //   return [];
@@ -414,9 +451,9 @@
 //   };
 // }
 
-// const a1 = mapNode(a, (_) => _.toUpperCase());
-// const b1 = mapNode(b, (_) => _.toUpperCase());
-// const c1 = mapNode(c, (_) => _.toUpperCase());
+// const a1 = mapNode(a, (_) => _.toUpperCase()); // { value: 'A' }
+// const b1 = mapNode(b, (_) => _.toUpperCase()); // { value: 'B', isLeaf: true }
+// const c1 = mapNode(c, (_) => _.toUpperCase()); // { value: 'C', children: [{ value: 'b', isLeaf: true }] }
 
 // console.log(a1, b1, c1);
 
@@ -451,7 +488,7 @@
 //   return Array.from({ length }, () => value);
 // }
 
-// console.log(call(fill, 5, 'a'));
+// console.log(call(fill, 5, 'a')); // ['a', 'a', 'a', 'a', 'a']
 
 /* ===================================================================== */
 

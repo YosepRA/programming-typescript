@@ -1,7 +1,11 @@
 {
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true
+  },
   "compilerOptions": {
     "lib": ["es2015"],
-    "module": "commonjs",
     "outDir": "dist",
     "sourceMap": true,
     "strict": true,

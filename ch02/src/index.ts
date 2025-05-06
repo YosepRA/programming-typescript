@@ -17,3 +17,6 @@ let c = {
   banana: b,
 };
 let d = c.apple * 4;
+// let e = 1 + [3]; //  error TS2365: Operator '+' cannot be applied to types 'number' and 'number[]'
+
+console.log(c);
